@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>	
+<head>
+	
+		<title> </title>
+		<meta charset="utf-8">	
+		<meta name="author" content="Dylan Wolfgram">
+		<meta name="description" content="A Pokemon Generation 1 type Calculator">
+		<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+		
+		<style>
+		
+			body{
+				background-image: url("background.jpg");
+				background-size: cover;
+				font-family: 'Acme', sans-serif;
+				color: #FFF;
+				font-size: 36px;
+			}
+			
+			h1, h2 {
+				text-align: center;
+			}
+			
+			h1 {
+				font-size: 2em;
+				margin-bottom: 0px;
+				
+			}
+			
+			h2 {
+				font-size: 1em;
+				margin-top: 0px;
+			}
+			
+			#controls{
+				margin-top: 100px;
+				text-align: center;
+			}
+			
+			select {
+				font-size: 2em;
+			}
+			
+			#result {
+				font-size: 2em;
+				text-align: center;
+				
+			}
+			
+			.advantage {
+				color: green;
+				text-shadow: 2px 2px red;
+			}
+			
+			.disadvantage {
+				color: red;
+				text-shadow: 2px 2px green;
+			}
+	</style>
+</head>
+<body>
+	<h1> Pokemon TYPE CALCULATOR </h1>
+	<h2> Generation One</h2>
+	
+<div id= "controls">
+	<select id= "attacker">
+		<option value="">Attacker</option>
+	</select>
+	
+		VS
+	
+	<select id= "defender">
+		<option value="">Defender</option>
+	</select>
+	
+</div>
+	<div id="result"></div>
+	
+	<script src="pokemon.js"></script>
+	
+	<script>
+	
+	var attacker = document.getElementById ("attacker");
+	var defender = document.getElementById ("defender");
+	var result = document.getElementById ("result");
+	
+	console.log(attacker);
+	
+	for(var i = 0; i < types.length; i++){
+		var type = types[i];
+		
+		//console.log(type);
+		
+		var option_attack = document.createElement("option");
+		option_attack.text = type;
+		option_attack.value = type;
+		
+		var option_defend = document.createElement("option");
+		option_defend.text = type;
+		option_defend.value = type;
+		
+		attacker.appendChild(option_attack);
+		defender.appendChild(option_defend);
+	}
+	
+	attacker.addEventListener("change", calculate);
+	defender.addEventListener("change", calculate);
+	
+	function calculate(){
+		//alert("Calculator!");
+		
+		
+		var attack_type = attacker.options[attacker.selectedIndex].value;
+		var defend_type = defender.options[defender.selectedIndex].value;
+		
+		console.log(attack_type, defend_type);
+		
+		var attack_graph = graph[attack_type];
+		console.log(attack_graph);
+		
+		// create the result variable, but leave it empty for now
+		var result_string;
+		
+		if( attack_graph.strengths.indexOf(defend_type) != -1){
+			result_string = "advantage";
+		}else if(attack_graph.weaknesses.indexOf(defend_type) != -1) {
+			result_string = "disadvantage";
+		}else{
+			result_string = "Push - even fight";
+		}
+		
+		result.innerHTML = result_string;
+		result.className = result_string;
+	}
+	</script>
+</body>
+
+
+</html>
